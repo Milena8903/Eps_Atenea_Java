@@ -1,11 +1,11 @@
 package com.epsateneajava.epsateneajava.entity;
 
+import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Especialidad {
@@ -15,20 +15,18 @@ public class Especialidad {
     private String nombre;
     
     
-    @ManyToOne
-    @JoinColumn(name="medico_id")
-    private Medico medico;
-    
-    
-    
-    public Especialidad(Long idEspecialidad, String nombre, Medico medico) {
-        this.idEspecialidad = idEspecialidad;
-        this.nombre = nombre;
-        this.medico = medico;
-    }
+    @OneToMany(mappedBy = "especialidad")
+    private List<Medico> medico;
 
 
     public Especialidad() {
+    }
+
+
+    public Especialidad(Long idEspecialidad, String nombre, List<Medico> medico) {
+        this.idEspecialidad = idEspecialidad;
+        this.nombre = nombre;
+        this.medico = medico;
     }
 
 
@@ -51,15 +49,16 @@ public class Especialidad {
         this.nombre = nombre;
     }
 
-/*
-    public Medico getMedico() {
+
+    public List<Medico> getMedico() {
         return medico;
     }
 
 
-    public void setMedico(Medico medico) {
+    public void setMedico(List<Medico> medico) {
         this.medico = medico;
     }
+ 
+    
 
-    */
 }

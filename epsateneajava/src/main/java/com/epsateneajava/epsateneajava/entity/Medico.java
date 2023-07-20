@@ -4,6 +4,8 @@ package com.epsateneajava.epsateneajava.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,46 +15,24 @@ import jakarta.persistence.OneToMany;
 public class Medico {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private long tarjetaProfesional;
     private String nombre;
     private String apellido;
-    private Number consultorio;
+    private Integer consultorio;
     private String email;
 
-    @OneToMany(mappedBy = "medico")
-    private List<Especialidad> especialidad;
-
     @ManyToOne
-    @JoinColumn(name="cita_id")
-    private Cita cita;
+    @JoinColumn(name="especialidad_id")
+    private Especialidad especialidad;
 
-    public Medico(Cita cita) {
-        this.cita = cita;
-    }
-    
-
-    public Cita getCita() {
-        return cita;
-    }
-
-
-    public void setCita(Cita cita) {
-        this.cita = cita;
-    }
-
-
-    public Medico(long tarjetaProfesional, String nombre, String apellido, Number consultorio, String email,
-            List<Especialidad> especialidad) {
-        this.tarjetaProfesional = tarjetaProfesional;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.consultorio = consultorio;
-        this.email = email;
-        this.especialidad = especialidad;
-    }
+    @OneToMany(mappedBy = "medico")
+    private List<Cita> cita;
 
     public Medico() {
-    }
+    }    
 
     public long getTarjetaProfesional() {
         return tarjetaProfesional;
@@ -82,7 +62,7 @@ public class Medico {
         return consultorio;
     }
 
-    public void setConsultorio(Number consultorio) {
+    public void setConsultorio(Integer consultorio) {
         this.consultorio = consultorio;
     }
 
@@ -94,14 +74,14 @@ public class Medico {
         this.email = email;
     }
 
-    public List<Especialidad> getEspecialidad() {
+    public Especialidad getEspecialidad() {
         return especialidad;
     }
 
-    public void setEspecialidad(List<Especialidad> especialidad) {
+    public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
-    }
-
+    } 
+    
     
 }
 

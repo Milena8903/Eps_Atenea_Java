@@ -2,48 +2,33 @@
 package com.epsateneajava.epsateneajava.entity;
 
 import java.time.LocalDate;
-
+import java.util.List;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Paciente {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     private Long cedula; 
     private String nombre;
     private String apellido;
     private LocalDate fechaNacimiento;
-    private Number telefono;
+    private Long telefono;
     
-    @ManyToOne
-    @JoinColumn(name="cita_id")
-    private Cita cita;
-
-    public Paciente(Cita cita) {
-        this.cita = cita;
-    }
-
-    public Cita getCita() {
-        return cita;
-    }
-
-    public void setCita(Cita cita) {
-        this.cita = cita;
-    }
-
-    public Paciente(Long cedula, String nombre, String apellido, LocalDate fechaNacimiento, Number telefono) {
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-    }
+    //Relación Uno a muchos
+    @OneToMany(mappedBy = "paciente")
+    private List<Cita> cita;
 
     public Paciente() {
     }
 
+   
     public Long getCedula() {
         return cedula;
     }
@@ -68,6 +53,16 @@ public class Paciente {
         this.apellido = apellido;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -76,15 +71,11 @@ public class Paciente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Number getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Number telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
-
-    
-    
 }
-
